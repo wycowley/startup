@@ -2,11 +2,15 @@
 
 [My startup - Simon](https://simon.cs260.click)
 
+## Lecture Notes
+
+-   [Github and Git] (notes/usinggithub.md)
+
 ## Helpful links
 
-- [Course instruction](https://github.com/webprogramming260)
-- [Canvas](https://byu.instructure.com)
-- [MDN](https://developer.mozilla.org)
+-   [Course instruction](https://github.com/webprogramming260)
+-   [Canvas](https://byu.instructure.com)
+-   [MDN](https://developer.mozilla.org)
 
 ## AWS
 
@@ -63,8 +67,8 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
 
 ```html
 <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#0066aa" rx="10" ry="10" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="72" font-family="Arial" fill="white">C</text>
+    <rect width="100" height="100" fill="#0066aa" rx="10" ry="10" />
+    <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="72" font-family="Arial" fill="white">C</text>
 </svg>
 ```
 
@@ -79,21 +83,14 @@ This was a lot of fun to see it all come together. I had to keep remembering to 
 Handling the toggling of the checkboxes was particularly interesting.
 
 ```jsx
-<div className="input-group sound-button-container">
-  {calmSoundTypes.map((sound, index) => (
-    <div key={index} className="form-check form-switch">
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value={sound}
-        id={sound}
-        onChange={() => togglePlay(sound)}
-        checked={selectedSounds.includes(sound)}
-      ></input>
-      <label className="form-check-label" htmlFor={sound}>
-        {sound}
-      </label>
-    </div>
-  ))}
+<div className='input-group sound-button-container'>
+    {calmSoundTypes.map((sound, index) => (
+        <div key={index} className='form-check form-switch'>
+            <input className='form-check-input' type='checkbox' value={sound} id={sound} onChange={() => togglePlay(sound)} checked={selectedSounds.includes(sound)}></input>
+            <label className='form-check-label' htmlFor={sound}>
+                {sound}
+            </label>
+        </div>
+    ))}
 </div>
 ```
