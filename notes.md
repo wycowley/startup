@@ -4,7 +4,7 @@
 
 ## Lecture Notes
 
--   [Github and Git] (notes/usinggithub.md)
+-   [Github and Git] (/notes/usinggithub.md)
 
 ## Helpful links
 
