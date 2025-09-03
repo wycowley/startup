@@ -3,8 +3,7 @@
 [My startup - Simon](https://simon.cs260.click)
 
 ## Lecture Notes
-
--   [Github and Git] (/notes/usinggithub.md)
+[Github and Git] (/notes/usinggithub.md)
 
 ## Helpful links
 
