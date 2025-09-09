@@ -9,7 +9,8 @@ A brief description of the application here. I'm going to make a really cool sta
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE] For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+> [!NOTE]
+> For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 -   [x] Proper use of Markdown
 -   [x] A concise and compelling elevator pitch
@@ -19,7 +20,7 @@ A brief description of the application here. I'm going to make a really cool sta
 
 ### Elevator pitch
 
-It's important to remember. Remember past experiences, past conversations, past friends. Yet despite this, in our hustle and bustle, in our busy daily lives, we often don't have the time or don't make the effort to record these small, important moments. But our homes can show small snapshots of our lives. That's where Drop A Memory comes in. Home owners post a QR code or url in their home, which links to their personal Drop A Memory room. Visitors take 30 seconds to visit the website to leave a small description of their activities (to drop a memory), creating a living record of all the visitos, memories and experiences in the home.
+It's important to remember. Remember past experiences, past conversations, past friends. Yet despite this, in our hustle and bustle, in our busy daily lives, we often don't have the time or don't make the effort to record these small, important moments. But our homes can show small snapshots of our lives. That's where Drop A Memory comes in. Home owners post a QR code or url in their home, which links to their personal Drop A Memory room. Visitors take 30 seconds to visit the website to leave a small description of their activities (to drop a memory), creating a living record of all the visitors, memories and experiences in the home.
 
 ### Design
 
