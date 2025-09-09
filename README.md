@@ -9,9 +9,7 @@ A brief description of the application here. I'm going to make a really cool sta
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE]
-
-For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
+> [!NOTE] For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 -   [x] Proper use of Markdown
 -   [x] A concise and compelling elevator pitch
@@ -21,23 +19,23 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-It's important to remember. Remember past experiences, past conversations, past friends. Yet despite this, in our hustle and bustle, in our busy daily lives, we often don't have the time or don't make the effort record these small, important moments. But our homes can be small snapshots of our lives. That's where Drop A Memory comes in. Home owners post a QR code or url in their home, guiding guests to their personal Drop A Memory room. Visitors, on the way out, visit the website to leave a small description and living record of all the memories and experiences shared.
+It's important to remember. Remember past experiences, past conversations, past friends. Yet despite this, in our hustle and bustle, in our busy daily lives, we often don't have the time or don't make the effort to record these small, important moments. But our homes can show small snapshots of our lives. That's where Drop A Memory comes in. Home owners post a QR code or url in their home, which links to their personal Drop A Memory room. Visitors take 30 seconds to visit the website to leave a small description of their activities (to drop a memory), creating a living record of all the visitos, memories and experiences in the home.
 
 ### Design
 
 ![Design image](pictures/design.png)
 
-1. Login page
+1. Login page (on the left)
 2. Main page with memories
 3. Memory submission page
 
 ### Key features
 
--   Create an account to start your personal splash page as the admin
+-   Create an account to start your personal room as the admin
 -   Login to your personal account through HTTPS
 -   Ability for admin to delete specific memories
 -   Access any user's room with their personal url
--   View all recent memories left by past visitors
+-   View all memories left by past visitors
 -   Add new memories which are stored in a database
 -   See memories update in real time
 
@@ -54,7 +52,7 @@ I am going to use the required technologies in the following ways.
     -   `add memory` - which adds a new memory to the database.
     -   `remove memory` - which removes an existing memory from the database.
     -   `retrieve image` - which calls UnsplashAPI to help users search and select a stock image that represents the memory being described.
--   **DB/Login** - The database would likely have two tables - one for users and one for memories. Each memory would store a timestamp, name, description, optionally a photo url, and the username to link the memory to the correct room.
+-   **DB/Login** - The database would likely have two tables - one for users and one for memories. Each memory row would store a timestamp, name, description, optionally a photo url, and the username to link the memory to the correct room.
 -   **WebSocket** - I will use WebSockets so that all users connected can instantly see changes made to the database, including memories added or memories removed.
 
 ## 🚀 AWS deliverable
