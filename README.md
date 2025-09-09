@@ -1,11 +1,8 @@
-# Your startup name here
+# Drop a Memory
 
 [My Notes](notes.md)
 
-A brief description of the application here. I'm going to make a really cool startup, I'm just not quite sure yet what that is going to be yet.
-
-> [!NOTE]
-> If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
+Drop a Memory is an online guest book for your home, allowing visitors to leave memories of their visit.
 
 ## 🚀 Specification Deliverable
 
