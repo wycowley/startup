@@ -3,7 +3,10 @@
 [My startup - Simon](https://simon.cs260.click)
 
 ## Lecture Notes
-- [Github and Git](notes/usinggithub.md)
+
+-   [Github and Git](notes/usinggithub.md)
+-   [AWS Basics](notes/awsbasics.md)
+-   [HTML Basics](notes/htmlbasics.md)
 
 ## Helpful links
 
