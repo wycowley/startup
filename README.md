@@ -63,15 +63,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
--   [x] **HTML pages** - I did not complete this part of the deliverable.
--   [x] **Proper HTML element usage** - I did not complete this part of the deliverable.
--   [x] **Links** - I did not complete this part of the deliverable.
--   [x] **Text** - I did not complete this part of the deliverable.
--   [x] **3rd party API placeholder** - I did not complete this part of the deliverable.
--   [x] **Images** - I did not complete this part of the deliverable.
--   [x] **Login placeholder** - I did not complete this part of the deliverable.
+-   [x] **HTML pages** - There are 4 HTML pages. Index, where one starts, create room (to create a room), room (to view memories), and drop memory (to add a memory).
+-   [x] **Proper HTML element usage** - I used a variety of HTML tags, like buttons, imgs, inputs with various types, h1s, navs, etc.
+-   [x] **Links** - There should be links to direct people to all of the correct pages.
+-   [x] **Text** - There's text to prompt users what to do.
+-   [x] **3rd party API placeholder** - I have a part in the drop a memory page that lets you search for an image, which will call a 3rd party API to let you actually be able to select an image.
+-   [x] **Images** - I displayed two images as part of the memories.
+-   [x] **Login placeholder** - There is a placeholder to login and to create the account that right now just routes you to the correct pages and displays "User" instead of anything else.
 -   [x] **DB data placeholder** - There is a placeholder for where the real memories will go, it has two example events.
--   [x] **WebSocket placeholder** - There is a placeholder for where the .
+-   [x] **WebSocket placeholder** - There is a placeholder for where the admin will be able to delete memories, which will make it realtime update for everyone else on the page.
 
 ## 🚀 CSS deliverable
 
