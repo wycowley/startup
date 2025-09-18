@@ -63,15 +63,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
--   [ ] **HTML pages** - I did not complete this part of the deliverable.
--   [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
--   [ ] **Links** - I did not complete this part of the deliverable.
--   [ ] **Text** - I did not complete this part of the deliverable.
--   [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
--   [ ] **Images** - I did not complete this part of the deliverable.
--   [ ] **Login placeholder** - I did not complete this part of the deliverable.
--   [ ] **DB data placeholder** - I did not complete this part of the deliverable.
--   [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+-   [x] **HTML pages** - I did not complete this part of the deliverable.
+-   [x] **Proper HTML element usage** - I did not complete this part of the deliverable.
+-   [x] **Links** - I did not complete this part of the deliverable.
+-   [x] **Text** - I did not complete this part of the deliverable.
+-   [x] **3rd party API placeholder** - I did not complete this part of the deliverable.
+-   [x] **Images** - I did not complete this part of the deliverable.
+-   [x] **Login placeholder** - I did not complete this part of the deliverable.
+-   [x] **DB data placeholder** - There is a placeholder for where the real memories will go, it has two example events.
+-   [x] **WebSocket placeholder** - There is a placeholder for where the .
 
 ## 🚀 CSS deliverable
 
