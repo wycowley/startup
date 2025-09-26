@@ -2,7 +2,7 @@
 
 html {
     font-family: "Inter", sans-serif;
-    --accent-color: rgb(49, 142, 255);
+    --accent-color: rgb(20, 103, 151);
     --background-color: rgb(240, 240, 240);
     --box-shadow: 0 8px 30px rgb(0, 0, 0, 0.05);
 }
@@ -53,6 +53,23 @@ nav > h1 {
 .room-selector > button:hover > a {
     color: var(--accent-color);
 }
+footer {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+footer > * {
+    margin: 0.25rem;
+}
+footer > a {
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
 body {
     margin: 0;
 }
@@ -73,7 +90,6 @@ body {
     border: none;
     background-color: var(--background-color);
     border-radius: 1rem;
-    width: fit-content;
     padding: 0.5rem 0.5rem;
     margin-bottom: 0.5rem;
 }
