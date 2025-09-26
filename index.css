@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+html {
+    font-family: "Inter", sans-serif;
+}
+header {
+    margin: 0;
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+nav {
+    padding: 1rem;
+}
+
+nav > h1 {
+    margin: 0.5rem 0;
+    font-size: 3rem;
+}
+.room-selector > * {
+    font-size: 1.5rem;
+}
+.room-selector > input {
+    border: none;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 0.25rem 0.5rem;
+}
+.room-selector > button {
+    border: none;
+    border-radius: 1rem;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.25rem;
+    background-color: rgb(49, 142, 255);
+}
+.room-selector > button > a {
+    text-decoration: none;
+    color: white;
+}
+body {
+    margin: 0;
+}
