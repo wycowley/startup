@@ -4,7 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Drop a Memory</title>
-        <!-- TODO: Add an icon in the future-->
+        <link rel="stylesheet" href="assets.css" />
+        <link rel="stylesheet" href="createroom.css" />
+        <!-- TODO: Add an icon in the future -->
         <!-- <link rel="icon" href="favicon.ico" /> -->
     </head>
     <body>
@@ -20,17 +22,23 @@
             </nav>
         </header>
         <body>
-            <h1>Welcome "User"</h1>
-            <section>
-                <h2>Create a room:</h2>
-                <label>Room Name: </label>
-                <input type="text" placeholder="Enter room name" />
-                <br />
-                <label>Allow anyone to add memories: </label>
-                <input type="checkbox" />
-                <br />
-                <button><a href="/room.html">Create Room</a></button>
-            </section>
+            <div class="create-room-section">
+                <h1>Welcome "User"</h1>
+                <section>
+                    <h2>Create a room:</h2>
+                    <label>Room Name: </label>
+                    <input type="text" placeholder="Enter room name" />
+                    <br />
+                    <div class="checkbox-section">
+                        <label>Allow anyone to add memories: </label>
+                        <input type="checkbox" class="checkbox" />
+                    </div>
+                    <br />
+                </section>
+                <div class="create-button-section">
+                    <button><a href="/room.html">Create Room</a></button>
+                </div>
+            </div>
         </body>
         <footer>
             <p>Created by Wyatt Cowley</p>

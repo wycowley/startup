@@ -1,0 +1,63 @@
+.create-room-section {
+    width: 60%;
+    margin-left: 20%;
+}
+.create-room-section > h1 {
+    font-size: 4rem;
+    margin-bottom: 0;
+}
+section > h2 {
+    font-size: 2.5rem;
+    margin: 0 0 1rem 0;
+}
+section label {
+    font-size: 1.5rem;
+}
+section input {
+    font-size: 1.25rem;
+    border: none;
+    background-color: var(--background-color);
+    border-radius: 1rem;
+    padding: 0.5rem 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.checkbox-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+.checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 2rem;
+    border-radius: 50%;
+    margin: 0;
+    accent-color: var(--accent-color);
+}
+.create-button-section button {
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    transition: background-color 0.3s;
+    box-shadow: var(--box-shadow) inset;
+}
+.create-button-section button:hover {
+    background-color: var(--background-color);
+}
+.create-button-section button:hover > a {
+    color: var(--accent-color);
+}
+.create-button-section button > a {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s;
+}
+.create-button-section {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
