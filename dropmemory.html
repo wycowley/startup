@@ -4,6 +4,9 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Drop a Memory</title>
+        <link rel="stylesheet" href="assets.css" />
+        <link rel="stylesheet" href="dropamemory.css" />
+
         <!-- TODO: Add an icon in the future-->
         <!-- <link rel="icon" href="favicon.ico" /> -->
     </head>
@@ -12,32 +15,38 @@
             <nav>
                 <h1>Drop a Memory</h1>
                 <!-- room selector -->
-                <div>
+                <div class="room-selector">
                     <label>Go to room: </label>
-                    <input type="text" placeholder="Room ID" />
+                    <input type="text" placeholder="Room ID" class="basic-input" />
                     <button class="basic-button"><a href="/room.html">Go</a></button>
                 </div>
             </nav>
         </header>
         <body>
-            <h1><b>Visited User?</b> Record the experience</h1>
-            <section>
-                <p>Current time: <span id="current-time">Sep 17 5:24pm</span></p>
-                <label>Your name: </label>
-                <input type="text" placeholder="Name" />
-                <br />
-                <label>Description: </label>
-                <input type="textarea" placeholder="This is what happened..." />
-            </section>
-            <section>
-                <h2>Optional</h2>
-                <label>Image Search: </label>
-                <input type="text" placeholder="Search for an image to add" />
-                <button>Search</button>
-                <br />
-            </section>
+            <div class="creation-section">
+                <h1>Visited <b>User</b>? Record the experience:</h1>
+                <section class="required-items">
+                    <p>Current time: <i id="current-time">Sep 17 5:24pm</i></p>
+                    <label>Your name: </label>
+                    <input type="text" placeholder="Name" class="basic-input" />
+                    <br />
+                    <label>Description: </label> <br />
+                    <textarea placeholder="This is what happened..."></textarea>
+                </section>
+                <section class="optional-items">
+                    <h2>Optional:</h2>
+                    <label>Image Search: </label>
+                    <span>
+                        <input type="text" placeholder="Keyword" class="basic-input" />
+                        <button class="basic-button"><a>Search</a></button>
+                    </span>
+                    <br />
+                </section>
 
-            <button><a href="/room.html">Drop the Memory</a></button>
+                <div class="drop-button">
+                    <button class="basic-button"><a href="/room.html">Drop the Memory</a></button>
+                </div>
+            </div>
         </body>
         <footer>
             <p>Created by Wyatt Cowley</p>
