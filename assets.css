@@ -37,23 +37,25 @@ nav > h1 {
     padding: 0.25rem 0.5rem;
 }
 .room-selector > button {
-    border: none;
-    border-radius: 1rem;
-    padding: 0.25rem 0.5rem;
     margin-left: 0.25rem;
+}
+.basic-button {
+    border: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
     background-color: var(--accent-color);
     transition: background-color 0.3s;
     box-shadow: var(--box-shadow) inset;
 }
-.room-selector > button > a {
+.basic-button > a {
     text-decoration: none;
     color: white;
     transition: color 0.3s;
 }
-.room-selector > button:hover {
+.basic-button:hover {
     background-color: var(--background-color);
 }
-.room-selector > button:hover > a {
+.basic-button:hover > a {
     color: var(--accent-color);
 }
 footer {
