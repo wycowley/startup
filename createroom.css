@@ -1,3 +1,12 @@
+@media only screen and (max-width: 500px) {
+    .create-room-section {
+        width: 90% !important;
+        margin-left: 5% !important;
+    }
+    .create-room-section > section > label {
+        /* display: none; */
+    }
+}
 .create-room-section {
     width: 60%;
     margin-left: 20%;

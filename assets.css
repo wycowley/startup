@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
+@media only screen and (max-width: 500px) {
+    .room-selector > label {
+        display: none;
+    }
+    nav > h1 {
+        font-size: 2.5rem !important;
+    }
+    .room-selector > input {
+        width: calc(90% - 55px) !important;
+    }
+}
+
 html {
     font-family: "Inter", sans-serif;
     --accent-color: rgb(20, 103, 151);
