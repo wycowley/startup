@@ -4,6 +4,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Drop a Memory</title>
+        <link rel="stylesheet" href="assets.css" />
+        <link rel="stylesheet" href="room.css" />
         <!-- TODO: Add an icon in the future-->
         <!-- <link rel="icon" href="favicon.ico" /> -->
     </head>
@@ -12,7 +14,7 @@
             <nav>
                 <h1>Drop a Memory</h1>
                 <!-- room selector -->
-                <div>
+                <div class="room-selector">
                     <label>Go to room: </label>
                     <input type="text" placeholder="Room ID" />
                     <button><a href="/room.html">Go</a></button>
@@ -20,22 +22,30 @@
             </nav>
         </header>
         <body>
-            <h1>User's Room</h1>
-            <section>
-                <p>Sep. 9 9:34 PM <button>Delete Memory (if admin)</button></p>
-                <img src="https://prodimage.images-bn.com/pimages/9780063398344_p0_v2_s1200x630.jpg" />
-                <p>Watched wicked together and it was pretty fun</p>
-                <p>Posted by: User</p>
-            </section>
-            <section>
-                <p>Sep. 3 5:24 PM <button>Delete Memory (if admin)</button></p>
-                <img src="https://a1.espncdn.com/combiner/i?img=%2Fi%2Fespn%2Fmisc_logos%2F500%2Fffl.png" />
-                <p>Doing a fantasy football draft</p>
-                <p>Posted by: User</p>
-            </section>
-            <section>
+            <section class="title-section">
+                <h1 class="title">User's Room</h1>
                 <button><a href="/dropmemory.html">Drop a Memory</a></button>
                 <button><a href="/index.html">Go Home</a></button>
+            </section>
+
+            <section class="card-container">
+                <div class="card">
+                    <p class="timestamp">Sep. 9 9:34 PM <button>+</button></p>
+                    <img src="https://prodimage.images-bn.com/pimages/9780063398344_p0_v2_s1200x630.jpg" />
+
+                    <div class="description">
+                        <p>Watched wicked together and it was pretty fun</p>
+                        <p>Posted by: User</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="timestamp">Sep. 3 5:24 PM <button>+</button></p>
+                    <img src="https://a1.espncdn.com/combiner/i?img=%2Fi%2Fespn%2Fmisc_logos%2F500%2Fffl.png" />
+                    <div class="description">
+                        <p>Doing a fantasy football draft</p>
+                        <p>Posted by: User</p>
+                    </div>
+                </div>
             </section>
         </body>
         <footer>

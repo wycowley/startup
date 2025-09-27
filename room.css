@@ -1,0 +1,47 @@
+.title-section {
+    margin-left: 10%;
+}
+.title-section > h1 {
+    margin: 0;
+    font-size: 4rem;
+}
+.card-container {
+    display: grid;
+    max-width: 1100px;
+    width: 90%;
+    margin-left: max(5%, calc(50% - 550px));
+    grid-template-columns: 1fr 1fr;
+}
+.card {
+    /* padding: 1rem; */
+    background-color: var(--background-color);
+    max-width: 500px;
+    width: 90%;
+    justify-self: center;
+}
+.timestamp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+    font-style: italic;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+}
+.timestamp > button {
+    transform: rotate(45deg) scale(3);
+    border: 0;
+    background-color: transparent;
+}
+.card > img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+.description {
+    margin: 0;
+    padding: 0.5rem;
+}
+.description > p {
+    margin: 0;
+}
