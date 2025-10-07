@@ -88,9 +88,9 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
--   [ ] **Bundled using Vite** - I did not complete this part of the deliverable.
--   [ ] **Components** - I did not complete this part of the deliverable.
--   [ ] **Router** - I did not complete this part of the deliverable.
+-   [x] **Bundled using Vite** - I bundled everything via Vite and React is working well
+-   [x] **Components** - I created components for all of the other pages that I used to have, like createroom, dropmemory, room, and login
+-   [x] **Router** - I added NavLinks and Routes to route between all of the different places. The header and footers are always rendered
 
 ## 🚀 React part 2: Reactivity deliverable
 
