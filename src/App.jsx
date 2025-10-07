@@ -1,6 +1,7 @@
 import React from "react";
 import "./app.css";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import Login from "./login/Login";
 
 export default function App() {
     return (
@@ -12,20 +13,22 @@ export default function App() {
                         <label>Go to room: </label>
                         <input type='text' placeholder='Room ID' class='basic-input' />
                         <button class='basic-button'>
-                            <a href='/room.html'>Go</a>
+                            <NavLink to='room'>Go</NavLink>
                         </button>
                     </div>
                 </nav>
             </header>
             <Routes>
-                <Route path='/' element={<h2>Welcome to Drop a Memory! Enter a room ID to get started.</h2>} />
+                <Route path='/' element={<Login></Login>} />
                 <Route path='/createroom' element={<h2>This is where the room content will go.</h2>} />
                 <Route path='/room' element={<h2>This is where the room content will go.</h2>} />
                 <Route path='/dropamemory' element={<h2>This is where the room content will go.</h2>} />
             </Routes>
             <footer>
                 <p>Created by Wyatt Cowley</p>
-                <a href='https://github.com/wycowley/startup'>Github</a>
+                <a href='https://github.com/wycowley/startup' target='_blank'>
+                    Github
+                </a>
             </footer>
         </BrowserRouter>
     );

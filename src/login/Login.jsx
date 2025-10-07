@@ -1,5 +1,6 @@
 import React from "react";
 import "./login.css";
+import { NavLink } from "react-router-dom";
 
 export default function Login() {
     return (
@@ -14,10 +15,10 @@ export default function Login() {
             </section>
             <section class='button-section'>
                 <button>
-                    <a href='/room.html'>Login</a>
+                    <NavLink to='room'>Login</NavLink>
                 </button>
                 <button>
-                    <a href='/createroom.html'>Create Account</a>
+                    <NavLink to='createroom'>Create Account</NavLink>
                 </button>
             </section>
         </div>
