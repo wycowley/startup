@@ -1,48 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="index.css" />
-        <link rel="stylesheet" href="assets.css" />
+        <meta charset="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
 
         <title>Drop a Memory</title>
-        <!-- TODO: Add an icon in the future-->
-        <!-- <link rel="icon" href="favicon.ico" /> -->
     </head>
     <body>
-        <header>
-            <nav>
-                <h1>Drop a Memory</h1>
-                <!-- room selector -->
-                <div class="room-selector">
-                    <label>Go to room: </label>
-                    <input type="text" placeholder="Room ID" class="basic-input" />
-                    <button class="basic-button"><a href="/room.html">Go</a></button>
-                </div>
-            </nav>
-        </header>
-        <body>
-            <div class="content-index">
-                <h1>Let's start:</h1>
-                <!-- input section -->
-                <section class="input-section">
-                    <label>Username: </label>
-                    <input type="text" placeholder="Your username" class="basic-input" />
-                    <br />
-                    <label>Password: </label>
-                    <input type="password" placeholder="Your password" class="basic-input" />
-                </section>
-                <!-- button section -->
-                <section class="button-section">
-                    <button><a href="/room.html">Login</a></button>
-                    <button><a href="/createroom.html">Create Account</a></button>
-                </section>
-            </div>
-        </body>
-        <footer>
-            <p>Created by Wyatt Cowley</p>
-            <a href="https://github.com/wycowley/startup">Github</a>
-        </footer>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <script type="module" src="/index.jsx"></script>
     </body>
 </html>

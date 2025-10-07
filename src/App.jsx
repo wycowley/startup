@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./app.css";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 
@@ -22,7 +21,7 @@ export default function App() {
                 <Route path='/' element={<h2>Welcome to Drop a Memory! Enter a room ID to get started.</h2>} />
                 <Route path='/createroom' element={<h2>This is where the room content will go.</h2>} />
                 <Route path='/room' element={<h2>This is where the room content will go.</h2>} />
-                <Route path='/room' element={<h2>This is where the room content will go.</h2>} />
+                <Route path='/dropamemory' element={<h2>This is where the room content will go.</h2>} />
             </Routes>
             <footer>
                 <p>Created by Wyatt Cowley</p>
