@@ -15,7 +15,7 @@ export default function Login() {
             </section>
             <section className='button-section'>
                 <button>
-                    <NavLink to='room'>Login</NavLink>
+                    <NavLink to='/room'>Login</NavLink>
                 </button>
                 <button>
                     <NavLink to='createroom'>Create Account</NavLink>

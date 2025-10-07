@@ -1,5 +1,6 @@
 import React from "react";
 import "./createroom.css";
+import { NavLink } from "react-router-dom";
 
 export default function CreateRoom() {
     return (
@@ -18,7 +19,7 @@ export default function CreateRoom() {
             </section>
             <div className='create-button-section'>
                 <button>
-                    <a href='/room.html'>Create Room</a>
+                    <NavLink to='/room'>Create Room</NavLink>
                 </button>
             </div>
         </div>

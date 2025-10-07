@@ -3,6 +3,8 @@ import "./app.css";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import Login from "./login/Login";
 import CreateRoom from "./createroom/CreateRoom";
+import Room from "./room/Room";
+import DropMemory from "./dropmemory/DropMemory";
 
 export default function App() {
     return (
@@ -14,7 +16,7 @@ export default function App() {
                         <label>Go to room: </label>
                         <input type='text' placeholder='Room ID' className='basic-input' />
                         <button className='basic-button'>
-                            <NavLink to='room'>Go</NavLink>
+                            <NavLink to='/room'>Go</NavLink>
                         </button>
                     </div>
                 </nav>
@@ -23,7 +25,7 @@ export default function App() {
                 <Route path='/' element={<Login />} />
                 <Route path='/createroom' element={<CreateRoom />} />
                 <Route path='/room' element={<Room />} />
-                <Route path='/dropamemory' element={<h2>This is where the room content will go.</h2>} />
+                <Route path='/dropmemory' element={<DropMemory />} />
             </Routes>
             <footer>
                 <p>Created by Wyatt Cowley</p>

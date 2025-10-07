@@ -1,5 +1,6 @@
-import React from "react-js";
+import React from "react";
 import "./room.css";
+import { NavLink } from "react-router-dom";
 
 export default function Room() {
     return (
@@ -8,10 +9,10 @@ export default function Room() {
                 <h1 class='title'>User's Room</h1>
                 <div>
                     <button class='basic-button'>
-                        <a href='/dropmemory.html'>Drop a Memory</a>
+                        <NavLink to='/dropmemory'>Drop a Memory</NavLink>
                     </button>
                     <button class='basic-button'>
-                        <a href='/index.html'>Go Home</a>
+                        <NavLink to='/'>Go Home</NavLink>
                     </button>
                 </div>
             </section>
