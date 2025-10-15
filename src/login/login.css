@@ -36,15 +36,19 @@
     background-color: var(--accent-color);
     transition: background-color 0.3s;
     box-shadow: var(--box-shadow) inset;
+    cursor: pointer;
 }
-.button-section > button:hover {
+.button-section > button:hover:enabled {
     background-color: var(--background-color);
 }
-.button-section > button:hover > a {
+.button-section > button:hover:enabled {
     color: var(--accent-color);
 }
-.button-section > button > a {
+.button-section > button {
     text-decoration: none;
     color: white;
     transition: color 0.3s;
+}
+.button-section > button:disabled {
+    filter: brightness(0.7);
 }

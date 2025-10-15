@@ -63,15 +63,13 @@ nav > h1 {
     width: fit-content;
     padding: 0.25rem 0.5rem;
 }
-.basic-button > a {
+.basic-button {
     text-decoration: none;
     color: white;
     transition: color 0.3s;
 }
 .basic-button:hover {
     background-color: var(--background-color);
-}
-.basic-button:hover > a {
     color: var(--accent-color);
 }
 footer {
