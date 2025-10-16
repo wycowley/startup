@@ -15,7 +15,7 @@ export default function App() {
                 <Route path='/' element={<Login />} />
                 <Route path='/createroom' element={<CreateRoom />} />
                 <Route path='/room/:id' element={<Room />} />
-                <Route path='/dropmemory' element={<DropMemory />} />
+                <Route path='/dropmemory/:id' element={<DropMemory />} />
             </Routes>
             <footer>
                 <p>Created by Wyatt Cowley</p>
