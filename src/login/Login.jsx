@@ -27,6 +27,11 @@ export default function Login() {
         }
     }, [username, password]);
 
+    const loginButtonClicked = () => {
+        // TODO: actually log in and get user data from backend
+        navigate("/room/test");
+    };
+
     return (
         <div className='content-index'>
             <h1>Let's start:</h1>
@@ -38,11 +43,7 @@ export default function Login() {
                 <input type='password' placeholder='Your password' className='basic-input' onChange={passwordUpdated} value={password} />
             </section>
             <section className='button-section'>
-                <button
-                    ref={loginButton}
-                    onClick={() => {
-                        navigate("/room");
-                    }}>
+                <button ref={loginButton} onClick={loginButtonClicked}>
                     Login
                 </button>
                 <button

@@ -68,7 +68,10 @@ nav > h1 {
     color: white;
     transition: color 0.3s;
 }
-.basic-button:hover {
+.basic-button:enabled {
+    cursor: pointer;
+}
+.basic-button:hover:enabled {
     background-color: var(--background-color);
     color: var(--accent-color);
 }

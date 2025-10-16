@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./room.css";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 
 export default function Room() {
     const { id } = useParams();
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        document.title = `Room: ${id}`;
+    }, [id]);
     return (
         <div>
             <section className='title-section'>
                 <h1 className='title'>User's Room</h1>
                 <div>
-                    <button className='basic-button'>
-                        <NavLink to='/dropmemory'>Drop a Memory</NavLink>
+                    <button className='basic-button' onClick={() => navigate("/dropmemory")}>
+                        Drop a Memory
                     </button>
-                    <button className='basic-button'>
-                        <NavLink to='/'>Go Home</NavLink>
+                    <button className='basic-button' onClick={() => navigate("/")}>
+                        Go Home
                     </button>
                 </div>
             </section>
