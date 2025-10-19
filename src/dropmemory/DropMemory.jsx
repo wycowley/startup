@@ -38,7 +38,7 @@ export default function DropMemory() {
         }
 
         const parsedData = JSON.parse(currentData);
-        parsedData.push({
+        parsedData.memories.push({
             timestamp: currentTime,
             imageUrl: imageUrl,
             description: description,

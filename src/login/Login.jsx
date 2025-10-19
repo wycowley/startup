@@ -32,13 +32,33 @@ export default function Login() {
         const strings = localStorage.getItem("usernames");
         if (strings) {
             const usernames = JSON.parse(strings);
-            if (usernames.get(username)?.password === password) {
+            if (usernames[username]?.password === password) {
                 localStorage.setItem("currentUser", username);
-                navigate(`/room/${usernames.get(username).defaultRoom}`);
+                navigate(`/room/${usernames[username].defaultRoom}`);
             } else {
                 window.alert("Invalid username or password");
             }
+        } else {
+            window.alert("Invalid username or password");
         }
+    };
+    const createButtonClicked = () => {
+        const strings = localStorage.getItem("usernames");
+        if (strings) {
+            const usernames = JSON.parse(strings);
+            if (usernames[username]) {
+                window.alert("Username already exists");
+                return;
+            }
+            usernames[username] = { password: password };
+            localStorage.setItem("usernames", JSON.stringify(usernames));
+        } else {
+            const usernames = {};
+            usernames[username] = { password: password };
+            localStorage.setItem("usernames", JSON.stringify(usernames));
+        }
+        localStorage.setItem("currentUser", username);
+        navigate("/createroom");
     };
 
     return (
@@ -55,12 +75,7 @@ export default function Login() {
                 <button ref={loginButton} onClick={loginButtonClicked} className='basic-button'>
                     Login
                 </button>
-                <button
-                    ref={createAccountButton}
-                    onClick={() => {
-                        navigate("/createroom");
-                    }}
-                    className='basic-button'>
+                <button ref={createAccountButton} onClick={createButtonClicked} className='basic-button'>
                     Create Account
                 </button>
             </section>

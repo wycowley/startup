@@ -15,6 +15,13 @@ export default function CreateRoom() {
             createButtonRef.current.disabled = false;
         }
     }, [roomName]);
+    useEffect(() => {
+        const currentUser = localStorage.getItem("currentUser");
+        if (currentUser == null) {
+            window.alert("You must have an account selected to go to a room");
+            navigate("/");
+        }
+    }, [navigate]);
 
     const changeRoomName = (event) => {
         setRoomName(event.target.value);
@@ -24,12 +31,21 @@ export default function CreateRoom() {
     };
     const createRoomButtonClicked = () => {
         // TODO: actually create room in backend
-        localStorage.setItem(roomName, JSON.stringify([]));
+        localStorage.setItem(roomName, JSON.stringify({ memories: [], allowAnyone: allowAnyone }));
+        const usernames = localStorage.getItem("usernames");
+        if (usernames) {
+            const parsedUsernames = JSON.parse(usernames);
+            const currentUser = localStorage.getItem("currentUser");
+            if (parsedUsernames[currentUser]) {
+                parsedUsernames[currentUser].defaultRoom = roomName;
+                localStorage.setItem("usernames", JSON.stringify(parsedUsernames));
+            }
+        }
         navigate(`/room/${roomName}`);
     };
     return (
         <div className='create-room-section'>
-            <h1>Welcome "User"</h1>
+            <h1>Welcome {localStorage.getItem("currentUser")}</h1>
             <section>
                 <h2>Create a room:</h2>
                 <label>Room Name: </label>
