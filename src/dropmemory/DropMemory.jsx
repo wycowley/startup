@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import "./dropmemory.css";
 
@@ -11,6 +11,7 @@ export default function DropMemory() {
     const [imageUrl, setImageUrl] = useState("");
     const [searchedImages, setSearchedImages] = useState([]);
     const [currentTime, setCurrentTime] = useState("");
+    const dropMemoryRef = useRef(null);
     const imageOptions = [
         "https://plus.unsplash.com/premium_photo-1671656349007-0c41dab52c96?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=774",
         "https://images.unsplash.com/photo-1607601657036-a1af652ed522?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=774",
@@ -63,6 +64,13 @@ export default function DropMemory() {
         const now = new Date();
         setCurrentTime(now.toLocaleString());
     }, []);
+    useEffect(() => {
+        if (name == "" || description == "" || imageUrl == "") {
+            dropMemoryRef.current.disabled = true;
+        } else {
+            dropMemoryRef.current.disabled = false;
+        }
+    }, [name, description, imageUrl]);
 
     const imagesRendered = searchedImages.map((url) => {
         return (
@@ -110,7 +118,7 @@ export default function DropMemory() {
             </section>
 
             <div className='drop-button'>
-                <button className='basic-button' onClick={dropMemoryButtonClicked}>
+                <button className='basic-button' onClick={dropMemoryButtonClicked} ref={dropMemoryRef}>
                     Drop the Memory
                 </button>
             </div>
