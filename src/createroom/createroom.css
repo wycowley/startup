@@ -41,29 +41,13 @@ section input {
     margin: 0;
     accent-color: var(--accent-color);
 }
-.create-button-section button {
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: var(--accent-color);
-    transition: background-color 0.3s;
-    box-shadow: var(--box-shadow) inset;
-}
-.create-button-section button:hover {
-    background-color: var(--background-color);
-}
-.create-button-section button:hover > a {
-    color: var(--accent-color);
-}
-.create-button-section button > a {
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s;
-}
 .create-button-section {
     margin-top: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+.create-button-section .basic-button {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
 }

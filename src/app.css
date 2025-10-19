@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 @media only screen and (max-width: 500px) {
-    .room-selector > label {
+    .room-selector label {
         display: none;
     }
     nav > h1 {
         font-size: 2.5rem !important;
     }
-    .room-selector > input {
+    .room-selector input {
         width: calc(90% - 55px) !important;
     }
 }
@@ -42,11 +42,11 @@ nav > h1 {
     margin: 0.5rem 0;
     font-size: 3rem;
 }
-.room-selector > * {
+.room-selector * {
     font-size: 1.5rem;
 }
 
-.room-selector > button {
+.room-selector button {
     margin-left: 0.25rem;
 }
 .basic-button {
@@ -56,17 +56,10 @@ nav > h1 {
     background-color: var(--accent-color);
     transition: background-color 0.3s;
     box-shadow: var(--box-shadow) inset;
-}
-.basic-input {
-    border: none;
-    border-radius: 1rem;
-    width: fit-content;
-    padding: 0.25rem 0.5rem;
-}
-.basic-button {
     text-decoration: none;
     color: white;
     transition: color 0.3s;
+    border: 3px solid transparent;
 }
 .basic-button:enabled {
     cursor: pointer;
@@ -75,6 +68,20 @@ nav > h1 {
     background-color: var(--background-color);
     color: var(--accent-color);
 }
+.basic-button:disabled {
+    background-color: transparent;
+    border-color: gray;
+    color: var(--accent-color);
+    cursor: not-allowed;
+    border: 3px dotted var(--accent-color);
+}
+.basic-input {
+    border: none;
+    border-radius: 1rem;
+    width: fit-content;
+    padding: 0.25rem 0.5rem;
+}
+
 footer {
     position: fixed;
     bottom: 0;

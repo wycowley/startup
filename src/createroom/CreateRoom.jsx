@@ -42,7 +42,7 @@ export default function CreateRoom() {
                 <br />
             </section>
             <div className='create-button-section'>
-                <button onClick={createRoomButtonClicked} ref={createButtonRef}>
+                <button onClick={createRoomButtonClicked} ref={createButtonRef} className='basic-button'>
                     Create Room
                 </button>
             </div>

@@ -35,7 +35,7 @@ export default function Room() {
     return (
         <div>
             <section className='title-section'>
-                <h1 className='title'>User's Room</h1>
+                <h1 className='title'>{id}</h1>
                 <div>
                     <button className='basic-button' onClick={() => navigate(`/dropmemory/${id}`)}>
                         Drop a Memory
@@ -46,7 +46,7 @@ export default function Room() {
                 </div>
             </section>
 
-            <section className='card-container'>{memoryList}</section>
+            <section className='card-container'>{data.length == 0 ? <p>No memories found yet!</p> : memoryList}</section>
         </div>
     );
 }

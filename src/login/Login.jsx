@@ -29,7 +29,16 @@ export default function Login() {
 
     const loginButtonClicked = () => {
         // TODO: actually log in and get user data from backend
-        navigate("/room/test");
+        const strings = localStorage.getItem("usernames");
+        if (strings) {
+            const usernames = JSON.parse(strings);
+            if (usernames.get(username)?.password === password) {
+                localStorage.setItem("currentUser", username);
+                navigate(`/room/${usernames.get(username).defaultRoom}`);
+            } else {
+                window.alert("Invalid username or password");
+            }
+        }
     };
 
     return (
@@ -43,14 +52,15 @@ export default function Login() {
                 <input type='password' placeholder='Your password' className='basic-input' onChange={passwordUpdated} value={password} />
             </section>
             <section className='button-section'>
-                <button ref={loginButton} onClick={loginButtonClicked}>
+                <button ref={loginButton} onClick={loginButtonClicked} className='basic-button'>
                     Login
                 </button>
                 <button
                     ref={createAccountButton}
                     onClick={() => {
                         navigate("/createroom");
-                    }}>
+                    }}
+                    className='basic-button'>
                     Create Account
                 </button>
             </section>

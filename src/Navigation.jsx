@@ -18,17 +18,27 @@ export default function Navigation() {
         }
     }, [roomId]);
 
+    const onFormSubmit = (e) => {
+        e.preventDefault();
+
+        if (localStorage.getItem(roomId) == null) {
+            window.alert("Room not found");
+        } else {
+            navigate(`/room/${roomId}`);
+        }
+    };
+
     return (
         <header>
             <nav>
                 <h1>Drop a Memory</h1>
-                <div className='room-selector'>
+                <form onSubmit={onFormSubmit} className='room-selector'>
                     <label>Go to room: </label>
                     <input type='text' placeholder='Room ID' className='basic-input' value={roomId} onChange={updateRoomId} />
-                    <button className='basic-button' onClick={() => navigate(`/room/${roomId}`)} ref={buttonRef}>
+                    <button className='basic-button' type='submit' ref={buttonRef}>
                         Go
                     </button>
-                </div>
+                </form>
             </nav>
         </header>
     );
