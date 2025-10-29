@@ -53,7 +53,9 @@ export default function Room() {
             </div>
         );
     });
-
+    let a = [3, 5, 6, 2, 4];
+    a.reduce((acc, val) => acc + val);
+    // will output
     return (
         <div>
             <section className='title-section'>
