@@ -49,7 +49,7 @@ export default function DropMemory() {
         navigate(`/room/${id}`);
     };
 
-    const imageSearch = (event) => {
+    const imageSearch = async (event) => {
         event.preventDefault();
         if (imageKeyword == "") {
             setSearchedImages([]);
@@ -57,7 +57,12 @@ export default function DropMemory() {
         }
         // TODO: actually search images
         console.log("Image search called");
-        setSearchedImages(imageOptions);
+        const result = await fetch(`/api/search?searchTerm=${imageKeyword}`, {
+            method: "GET",
+        });
+        const jsonResult = await result.json();
+        console.log(jsonResult);
+        setSearchedImages(jsonResult);
     };
 
     useEffect(() => {
