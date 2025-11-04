@@ -7,6 +7,7 @@ export default function Navigation() {
     const [roomId, setRoomId] = useState("");
     const buttonRef = useRef(null);
     const logOutButtonRef = useRef(null);
+    const browseRoomsButtonRef = useRef(null);
 
     const updateRoomId = (event) => {
         setRoomId(event.target.value);
@@ -28,8 +29,10 @@ export default function Navigation() {
         }).then((res) => {
             if (res.ok) {
                 logOutButtonRef.current.style.display = "inline-block";
+                browseRoomsButtonRef.current.style.display = "inline-block";
             } else {
                 logOutButtonRef.current.style.display = "none";
+                browseRoomsButtonRef.current.style.display = "none";
             }
         });
     }, [location]);
@@ -50,11 +53,18 @@ export default function Navigation() {
         }
     };
 
+    const browseRooms = () => {
+        navigate("/browserooms");
+    };
+
     return (
         <header>
             <nav>
                 <h1>
                     Drop a Memory{" "}
+                    <button className='basic-button' onClick={browseRooms} style={{ fontSize: "1rem", verticalAlign: "middle" }} ref={browseRoomsButtonRef}>
+                        Browse Rooms
+                    </button>{" "}
                     <button className='basic-button' onClick={logOut} style={{ fontSize: "1rem", verticalAlign: "middle" }} ref={logOutButtonRef}>
                         Log out
                     </button>

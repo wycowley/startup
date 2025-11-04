@@ -103,12 +103,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
--   [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
--   [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
--   [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
--   [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
--   [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
--   [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+I changed some of the functionality of my app with this deliverable. For example, now rooms are deliminated by
+username and room name, and a user can have multiple rooms that they can create and look at.
+
+-   [x] **Node.js/Express HTTP service** - I did this part of the deliverable.
+-   [x] **Static middleware for frontend** - Frontend is served by Express.
+-   [x] **Calls to third party endpoints** - A call to the Pexels API in DropMemory where you can search for what image to add.
+-   [x] **Backend service endpoints** - I have many backend service endpoints for authentication and getting user data.
+-   [x] **Frontend calls service endpoints** - No data is stored in localStorage and instead goes and calls the API.
+-   [x] **Supports registration, login, logout, and restricted endpoint** - I have registration, login, and logout working with the cookies. I didn't use a middleware function for restricting endpoints, because not all endpoints need to be restricted for my application (you can always view a person's room without logging in, for example). Instead I check in each endpoint that does require authentication whether the user is logged in and is the correct user for that endpoint.
 
 ## 🚀 DB deliverable
 
