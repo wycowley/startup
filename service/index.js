@@ -57,6 +57,7 @@ apiRouter.put("/auth", async (req, res) => {
     const user = getUser("username", username);
     if (user && (await bcrypt.compare(password, user.password))) {
         setCookie(res, user);
+        res.send({ username: user.username });
     } else {
         res.status(401).send({ msg: "Unauthorized" });
     }
@@ -75,7 +76,7 @@ apiRouter.get("/user/me", async (req, res) => {
     if (user) {
         res.send({ username: user.username });
     } else {
-        res.status(401).send({ msg: "Unauthorized" });
+        res.status(401).send({ msg: "No user logged in" });
     }
 });
 const createUser = async (username, password) => {
@@ -150,7 +151,7 @@ apiRouter.post("/room/drop", async (req, res) => {
     res.send({ msg: "Memory dropped" });
 });
 // get memories in a room
-apiRouter.get("/room/memories/:username/:roomName", async (req, res) => {
+apiRouter.get("/room/:username/:roomName", async (req, res) => {
     const { username, roomName } = req.params;
     const room = rooms.find((r) => r.name === roomName && r.owner === username);
     if (!room) {

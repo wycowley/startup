@@ -32,14 +32,15 @@ export default function CreateRoom() {
             body: JSON.stringify({ roomName, allowAnyone }),
         });
         if (result.ok) {
-            navigate(`/room/${roomName}`);
+            const data = await result.json();
+            navigate(`/room/${data.username}/${roomName}`);
         } else {
             window.alert("Failed to create room");
         }
     };
     return (
         <div className='create-room-section'>
-            <h1>Welcome {localStorage.getItem("currentUser")}</h1>
+            <h1>Welcome</h1>
             <section>
                 <h2>Create a room:</h2>
                 <label>Room Name: </label>

@@ -3,40 +3,27 @@ import "./room.css";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 
 export default function Room() {
-    const { id } = useParams();
+    const { username, roomName } = useParams();
     const [data, setData] = useState({ memories: [] });
     const dropMemoryButton = useRef(null);
     const navigate = useNavigate();
     useEffect(() => {
-        document.title = `Room: ${id}`;
-        const storedData = localStorage.getItem(id);
-        if (storedData == null) {
-            setData({ memories: [] });
-        } else {
-            setData(JSON.parse(storedData));
-            if (JSON.parse(storedData).allowAnyone) {
-                dropMemoryButton.current.disabled = false;
-            } else {
-                const currentUser = localStorage.getItem("currentUser");
-                const usernames = localStorage.getItem("usernames");
-                if (usernames) {
-                    const parsedUsernames = JSON.parse(usernames);
-                    if (parsedUsernames[currentUser]) {
-                        const defaultRoom = parsedUsernames[currentUser].defaultRoom;
-                        if (defaultRoom === id) {
-                            dropMemoryButton.current.disabled = false;
-                        } else {
-                            dropMemoryButton.current.disabled = true;
-                        }
-                    } else {
-                        dropMemoryButton.current.disabled = true;
-                    }
-                } else {
-                    dropMemoryButton.current.disabled = true;
-                }
+        document.title = `Room: ${roomName}`;
+        const fetchRoomData = async () => {
+            const result = await fetch(`/api/room/${username}/${roomName}`, {
+                method: "GET",
+            });
+            if (!result.ok) {
+                console.error("Failed to fetch room data");
+                window.alert("Failed to fetch room data, returning to home page");
+                navigate("/");
+                return;
             }
-        }
-    }, [id]);
+            const roomData = await result.json();
+            setData(roomData);
+        };
+        fetchRoomData();
+    }, [roomName]);
 
     const memoryList = data.memories.map((cardData) => {
         return (
@@ -59,7 +46,7 @@ export default function Room() {
     return (
         <div>
             <section className='title-section'>
-                <h1 className='title'>{id}</h1>
+                <h1 className='title'>{roomName}</h1>
                 <div>
                     <button className='basic-button' onClick={() => navigate(`/dropmemory/${id}`)} ref={dropMemoryButton}>
                         Drop a Memory

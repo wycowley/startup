@@ -13,8 +13,8 @@ export default function BrowseRooms() {
                 window.alert("Not logged in, please go to login page");
                 navigate("/");
             }
-
-            setRooms(await rooms.json());
+            const data = await rooms.json();
+            setRooms(data.rooms);
         };
 
         fetchRooms();
@@ -22,19 +22,24 @@ export default function BrowseRooms() {
     return (
         <div>
             <h1>Your rooms</h1>
+            {rooms.length === 0 && <p>No rooms available.</p>}
             <ul>
-                {rooms.map((room) => (
-                    <li key={room.name}>
-                        <b>{room.name}</b> - {room.memories.length} memories
-                        <button
-                            onClick={() => {
-                                navigate(`/room/${room.name}`);
-                            }}>
-                            Go to room
-                        </button>
-                    </li>
-                ))}
+                {rooms.length > 0 &&
+                    rooms.map((room) => (
+                        <li key={room.name}>
+                            <b>{room.name}</b> - {room.memories.length} memories
+                            <button
+                                onClick={() => {
+                                    navigate(`/room/${room.owner}/${room.name}`);
+                                }}>
+                                Go to room
+                            </button>
+                        </li>
+                    ))}
             </ul>
+            <button onClick={() => navigate("/createroom")} className='basic-button'>
+                Create Room
+            </button>
         </div>
     );
 }

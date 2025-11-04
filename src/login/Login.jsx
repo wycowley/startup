@@ -35,7 +35,8 @@ export default function Login() {
             },
             body: JSON.stringify({ username, password }),
         });
-        if (result.status == 200) {
+
+        if (result.ok) {
             navigate("/browserooms");
         } else {
             window.alert("Invalid username or password");
