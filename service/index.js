@@ -159,7 +159,7 @@ apiRouter.delete("/room/delete/:username/:roomName/:memoryId", async (req, res) 
         return;
     }
     // don't need to check if you are the owner since only the owner can have a room with that name
-    room.memories.remove((memory) => memory.memoryId === memoryId);
+    room.memories = room.memories.filter((memory) => memory.memoryId !== memoryId);
     res.send({ msg: "Memory deleted" });
 });
 // get rooms for a user

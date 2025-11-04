@@ -34,19 +34,31 @@ export default function Room() {
 
     const memoryList = data.memories.map((cardData) => {
         return (
-            <div className='card' key={cardData.timestamp}>
+            <div className='card' key={cardData.memoryId}>
                 <p className='timestamp'>
-                    {cardData.timestamp} {hostLoggedIn && <button>×</button>}
+                    {cardData.timestamp} {hostLoggedIn && <button onClick={() => deleteMemory(cardData)}>×</button>}
                 </p>
                 <img src={cardData.imageUrl} />
 
                 <div className='description'>
                     <p>{cardData.description}</p>
-                    <p>Posted by: {cardData.user}</p>
+                    <p>Posted by: {cardData.name}</p>
                 </div>
             </div>
         );
     });
+    const deleteMemory = async (memory) => {
+        const result = await fetch(`/api/room/delete/${username}/${roomName}/${memory.memoryId}`, {
+            method: "DELETE",
+        });
+        if (!result.ok) {
+            console.error("Failed to delete memory");
+            window.alert("Failed to delete memory");
+        }
+        // refresh the memory list
+        const newData = data.memories.filter((m) => m.memoryId !== memory.memoryId);
+        setData({ ...data, memories: newData });
+    };
     // will output
     return (
         <div>
