@@ -110,10 +110,6 @@ const clearCookie = (res, user) => {
     res.clearCookie("token");
 };
 
-// endpoint to drop a memory (maybe need to be authorized)
-// endpoint to delete a memory (need to be authorized)
-// endpoint to get memories for a certain room (not authorized)
-// endpoint to create a room (authorized)
 apiRouter.post("/room/create", async (req, res) => {
     const token = req.cookies["token"];
     const user = await getUser("token", token);
@@ -122,9 +118,74 @@ apiRouter.post("/room/create", async (req, res) => {
         return;
     }
     const { roomName, allowAnyone } = req.body;
-    createRoom(roomName, allowAnyone, user.username);
-    res.send({ msg: "Room created" });
+    if (createRoom(roomName, allowAnyone, user.username)) {
+        res.send({ msg: "Room created" });
+        return;
+    }
+    res.status(409).send({ msg: "You already have a room with that name" });
 });
+apiRouter.post("/room/drop", async (req, res) => {
+    const { roomName, memory } = req.body;
+    const room = rooms.find((r) => r.name === roomName);
+    if (!room) {
+        res.status(404).send({ msg: "Room not found" });
+        return;
+    }
+    // if the room does not allow for anyone to drop memories, check authorization
+    if (!room.allowAnyone) {
+        const token = req.cookies["token"];
+        const user = await getUser("token", token);
+        if (!user) {
+            res.status(401).send({ msg: "Unauthorized" });
+            return;
+        }
+        if (room.owner !== user.username) {
+            res.status(403).send({ msg: "Forbidden" });
+            return;
+        }
+    }
+    room.memories.push({ ...memory, memoryId: uuid.v4() }); // set a unique id for the memory so it can be deleted properly
+    res.send({ msg: "Memory dropped" });
+});
+apiRouter.get("/room/memories/:username/:roomName", async (req, res) => {
+    const { username, roomName } = req.params;
+    const room = rooms.find((r) => r.name === roomName && r.owner === username);
+    if (!room) {
+        res.status(404).send({ msg: "Room not found" });
+        return;
+    }
+    res.send({ memories: room.memories });
+});
+apiRouter.delete("/room/delete/:username/:roomName/:memoryId", async (req, res) => {
+    const { memoryId, roomName, username } = req.params;
+    const token = req.cookies["token"];
+    const user = await getUser("token", token);
+    if (!user) {
+        res.status(401).send({ msg: "Unauthorized" });
+        return;
+    }
+    const room = rooms.find((r) => r.name === roomName && r.owner === username);
+    if (!room) {
+        res.status(404).send({ msg: "Room not found" });
+        return;
+    }
+    // don't need to check if you are the owner since only the owner can have a room with that name
+    room.memories.remove((memory) => memory.memoryId === memoryId);
+    res.send({ msg: "Memory deleted" });
+});
+const createRoom = (roomName, allowAnyone, ownerUsername) => {
+    if (rooms.find((room) => room.name === roomName && room.owner === ownerUsername)) {
+        return null; // room already exists
+    }
+    const room = {
+        name: roomName,
+        allowAnyone: allowAnyone,
+        owner: ownerUsername,
+        memories: [],
+    };
+    rooms.push(room);
+    return room;
+};
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
