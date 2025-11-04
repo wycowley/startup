@@ -103,8 +103,11 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-I changed some of the functionality of my app with this deliverable. For example, now rooms are deliminated by
-username and room name, and a user can have multiple rooms that they can create and look at.
+I changed some of the functionality of my app with this deliverable. For example, now rooms are deliminated by username and room name, and a user can have multiple rooms that they can create and look at at the new "Browse Rooms" page.
+
+If a user is logged in and viewing their own room, they are able to delete memories. If a room is set up as private, only the owner can add memories. Otherwise, anyone can add memories to a room.
+
+In the navigation bar, you need to type in the username and room name to go to a specific room (such as "username/roomname"). You can also click the "Browse Rooms" button to see all of your rooms and visit them. That Browse Rooms and Logout button only appear when you are logged in.
 
 -   [x] **Node.js/Express HTTP service** - I did this part of the deliverable.
 -   [x] **Static middleware for frontend** - Frontend is served by Express.
