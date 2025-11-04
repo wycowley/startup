@@ -3,7 +3,7 @@ import { NavLink, useParams, useNavigate } from "react-router-dom";
 import "./dropmemory.css";
 
 export default function DropMemory() {
-    const { id } = useParams();
+    const { username, roomName } = useParams();
     const navigate = useNavigate();
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -32,21 +32,29 @@ export default function DropMemory() {
         setImageKeyword(event.target.value);
     };
 
-    const dropMemoryButtonClicked = () => {
-        let currentData = localStorage.getItem(id);
-        if (!currentData) {
-            currentData = "[]";
-        }
-
-        const parsedData = JSON.parse(currentData);
-        parsedData.memories.push({
-            timestamp: currentTime,
-            imageUrl: imageUrl,
-            description: description,
-            user: name,
+    const dropMemoryButtonClicked = async () => {
+        const memoryData = {
+            memory: {
+                name: name,
+                description: description,
+                imageUrl: imageUrl,
+                timestamp: currentTime,
+                user: username,
+            },
+        };
+        const result = await fetch(`/api/room/drop/${username}/${roomName}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(memoryData),
         });
-        localStorage.setItem(id, JSON.stringify(parsedData));
-        navigate(`/room/${id}`);
+        if (!result.ok) {
+            console.error("Failed to drop memory");
+            window.alert("Failed to drop memory, please try again");
+            return;
+        }
+        navigate(`/room/${username}/${roomName}`);
     };
 
     const imageSearch = async (event) => {
@@ -55,14 +63,18 @@ export default function DropMemory() {
             setSearchedImages([]);
             return;
         }
-        // TODO: actually search images
-        console.log("Image search called");
-        const result = await fetch(`/api/search?searchTerm=${imageKeyword}`, {
+        const pexels_api_key = "kLdEN698hYcnPgtwzKS4uOuEarRAtFlAUYDwy2773Sdm3RoaW8d9aVAU";
+
+        const result = await fetch(`https://api.pexels.com/v1/search?query=${imageKeyword}&per_page=4`, {
             method: "GET",
+            headers: {
+                Authorization: `${pexels_api_key}`,
+            },
         });
         const jsonResult = await result.json();
-        console.log(jsonResult);
-        setSearchedImages(jsonResult);
+        const images = jsonResult.photos.map((photo) => photo.src.medium);
+        console.log("Images:", images);
+        setSearchedImages(images);
     };
 
     useEffect(() => {
@@ -89,6 +101,7 @@ export default function DropMemory() {
                     }
                 }}
                 className={url == imageUrl ? "selected" : "deselected"}
+                key={url}
             />
         );
     });
@@ -96,7 +109,7 @@ export default function DropMemory() {
     return (
         <div className='creation-section'>
             <h1>
-                Visited <b>User</b>? Record the experience:
+                Visited <b>{username}</b>? Record the experience:
             </h1>
             <section className='required-items'>
                 <p>

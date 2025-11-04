@@ -18,25 +18,6 @@ app.use(cookieParser());
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-apiRouter.get("/search", async (req, res) => {
-    console.log("Search API called");
-
-    const searchTerm = req.query.searchTerm;
-
-    const result = await fetch(`https://api.pexels.com/v1/search?query=${searchTerm}&per_page=4`, {
-        method: "GET",
-        headers: {
-            Authorization: `${pexels_api_key}`,
-        },
-    });
-    console.log(result);
-    const returnedJson = await result.json();
-    const images = returnedJson.photos.map((photo) => photo.src.medium);
-    console.log("API returning images:");
-    console.log(images);
-
-    res.json(images);
-});
 // create account
 apiRouter.post("/auth", async (req, res) => {
     const { username, password } = req.body;
@@ -127,9 +108,10 @@ apiRouter.post("/room/create", async (req, res) => {
     res.status(401).send({ msg: "You already have a room with that name" });
 });
 // drop a memory in a room
-apiRouter.post("/room/drop", async (req, res) => {
-    const { roomName, memory } = req.body;
-    const room = rooms.find((r) => r.name === roomName);
+apiRouter.post("/room/drop/:username/:roomName", async (req, res) => {
+    const { memory } = req.body;
+    const { username, roomName } = req.params;
+    const room = rooms.find((r) => r.name === roomName && r.owner === username);
     if (!room) {
         res.status(404).send({ msg: "Room not found" });
         return;

@@ -48,7 +48,7 @@ export default function Room() {
             <section className='title-section'>
                 <h1 className='title'>{roomName}</h1>
                 <div>
-                    <button className='basic-button' onClick={() => navigate(`/dropmemory/${id}`)} ref={dropMemoryButton}>
+                    <button className='basic-button' onClick={() => navigate(`/dropmemory/${username}/${roomName}`)} ref={dropMemoryButton}>
                         Drop a Memory
                     </button>
                     <button className='basic-button' onClick={() => navigate("/")}>
