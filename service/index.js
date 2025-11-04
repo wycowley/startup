@@ -140,7 +140,9 @@ apiRouter.get("/room/:username/:roomName", async (req, res) => {
         res.status(404).send({ msg: "Room not found" });
         return;
     }
-    res.send({ memories: room.memories });
+    const token = req.cookies["token"];
+    const user = await getUser("token", token);
+    res.send({ memories: room.memories, allowAnyone: room.allowAnyone, hostLoggedIn: user && user.username === username });
 });
 // delete a memory in a room
 apiRouter.delete("/room/delete/:username/:roomName/:memoryId", async (req, res) => {

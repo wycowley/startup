@@ -7,7 +7,7 @@ import Room from "./room/Room";
 import DropMemory from "./dropmemory/DropMemory";
 import Navigation from "./Navigation";
 import BrowseRooms from "./browseroom/BrowseRooms";
-
+import NotFound from "./NotFound";
 export default function App() {
     return (
         <BrowserRouter>
@@ -18,6 +18,7 @@ export default function App() {
                 <Route path='/room/:username/:roomName' element={<Room />} />
                 <Route path='/dropmemory/:username/:roomName' element={<DropMemory />} />
                 <Route path='/browserooms' element={<BrowseRooms />} />
+                <Route path='*' element={<NotFound />} />
             </Routes>
             <footer>
                 <p>Created by Wyatt Cowley</p>

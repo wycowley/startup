@@ -12,12 +12,6 @@ export default function DropMemory() {
     const [searchedImages, setSearchedImages] = useState([]);
     const [currentTime, setCurrentTime] = useState("");
     const dropMemoryRef = useRef(null);
-    const imageOptions = [
-        "https://plus.unsplash.com/premium_photo-1671656349007-0c41dab52c96?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=774",
-        "https://images.unsplash.com/photo-1607601657036-a1af652ed522?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=774",
-        "https://images.unsplash.com/photo-1618808786465-daf6c13d573c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1734",
-        "https://plus.unsplash.com/premium_photo-1668698357735-d2bc81745e5d?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1740",
-    ];
 
     const changeName = (event) => {
         setName(event.target.value);
@@ -39,7 +33,6 @@ export default function DropMemory() {
                 description: description,
                 imageUrl: imageUrl,
                 timestamp: currentTime,
-                user: username,
             },
         };
         const result = await fetch(`/api/room/drop/${username}/${roomName}`, {
@@ -51,13 +44,13 @@ export default function DropMemory() {
         });
         if (!result.ok) {
             console.error("Failed to drop memory");
-            window.alert("Failed to drop memory, please try again");
-            return;
+            window.alert("Failed to drop memory, only the owner can drop memories in this room");
         }
         navigate(`/room/${username}/${roomName}`);
     };
 
     const imageSearch = async (event) => {
+        // 3rd party API call to Pexels
         event.preventDefault();
         if (imageKeyword == "") {
             setSearchedImages([]);

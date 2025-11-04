@@ -5,6 +5,7 @@ import { NavLink, useParams, useNavigate } from "react-router-dom";
 export default function Room() {
     const { username, roomName } = useParams();
     const [data, setData] = useState({ memories: [] });
+    const [hostLoggedIn, setHostLoggedIn] = useState(false);
     const dropMemoryButton = useRef(null);
     const navigate = useNavigate();
     useEffect(() => {
@@ -15,21 +16,27 @@ export default function Room() {
             });
             if (!result.ok) {
                 console.error("Failed to fetch room data");
-                window.alert("Failed to fetch room data, returning to home page");
-                navigate("/");
+                window.alert("Failed to fetch room data, returning to previous page");
+                navigate(-1);
                 return;
             }
             const roomData = await result.json();
             setData(roomData);
+            setHostLoggedIn(roomData.hostLoggedIn);
+            if (roomData.allowAnyone || roomData.hostLoggedIn) {
+                dropMemoryButton.current.disabled = false;
+            } else {
+                dropMemoryButton.current.disabled = true;
+            }
         };
         fetchRoomData();
     }, [roomName]);
 
     const memoryList = data.memories.map((cardData) => {
         return (
-            <div className='card'>
+            <div className='card' key={cardData.timestamp}>
                 <p className='timestamp'>
-                    {cardData.timestamp} <button>×</button>
+                    {cardData.timestamp} {hostLoggedIn && <button>×</button>}
                 </p>
                 <img src={cardData.imageUrl} />
 
@@ -40,8 +47,6 @@ export default function Room() {
             </div>
         );
     });
-    let a = [3, 5, 6, 2, 4];
-    a.reduce((acc, val) => acc + val);
     // will output
     return (
         <div>
