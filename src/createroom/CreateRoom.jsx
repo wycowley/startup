@@ -15,13 +15,6 @@ export default function CreateRoom() {
             createButtonRef.current.disabled = false;
         }
     }, [roomName]);
-    useEffect(() => {
-        const currentUser = localStorage.getItem("currentUser");
-        if (currentUser == null) {
-            window.alert("You must have an account selected to go to a room");
-            navigate("/");
-        }
-    }, [navigate]);
 
     const changeRoomName = (event) => {
         setRoomName(event.target.value);
@@ -29,19 +22,20 @@ export default function CreateRoom() {
     const changeAllowAnyone = (event) => {
         setAllowAnyone(event.target.checked);
     };
-    const createRoomButtonClicked = () => {
+    const createRoomButtonClicked = async () => {
         // TODO: actually create room in backend
-        localStorage.setItem(roomName, JSON.stringify({ memories: [], allowAnyone: allowAnyone }));
-        const usernames = localStorage.getItem("usernames");
-        if (usernames) {
-            const parsedUsernames = JSON.parse(usernames);
-            const currentUser = localStorage.getItem("currentUser");
-            if (parsedUsernames[currentUser]) {
-                parsedUsernames[currentUser].defaultRoom = roomName;
-                localStorage.setItem("usernames", JSON.stringify(parsedUsernames));
-            }
+        const result = await fetch(`/api/room/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ roomName, allowAnyone }),
+        });
+        if (result.ok) {
+            navigate(`/room/${roomName}`);
+        } else {
+            window.alert("Failed to create room");
         }
-        navigate(`/room/${roomName}`);
     };
     return (
         <div className='create-room-section'>

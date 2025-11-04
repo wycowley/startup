@@ -6,6 +6,7 @@ import CreateRoom from "./createroom/CreateRoom";
 import Room from "./room/Room";
 import DropMemory from "./dropmemory/DropMemory";
 import Navigation from "./Navigation";
+import BrowseRooms from "./browseroom/BrowseRooms";
 
 export default function App() {
     return (
@@ -14,8 +15,9 @@ export default function App() {
             <Routes>
                 <Route path='/' element={<Login />} />
                 <Route path='/createroom' element={<CreateRoom />} />
-                <Route path='/room/:id' element={<Room />} />
-                <Route path='/dropmemory/:id' element={<DropMemory />} />
+                <Route path='/room/:username/:roomName' element={<Room />} />
+                <Route path='/dropmemory/:username/:roomName' element={<DropMemory />} />
+                <Route path='/browserooms' element={<BrowseRooms />} />
             </Routes>
             <footer>
                 <p>Created by Wyatt Cowley</p>

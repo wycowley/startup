@@ -27,38 +27,33 @@ export default function Login() {
         }
     }, [username, password]);
 
-    const loginButtonClicked = () => {
-        // TODO: actually log in and get user data from backend
-        const strings = localStorage.getItem("usernames");
-        if (strings) {
-            const usernames = JSON.parse(strings);
-            if (usernames[username]?.password === password) {
-                localStorage.setItem("currentUser", username);
-                navigate(`/room/${usernames[username].defaultRoom}`);
-            } else {
-                window.alert("Invalid username or password");
-            }
+    const loginButtonClicked = async () => {
+        const result = await fetch(`/api/auth`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+        if (result.status == 200) {
+            navigate("/browserooms");
         } else {
             window.alert("Invalid username or password");
         }
     };
-    const createButtonClicked = () => {
-        const strings = localStorage.getItem("usernames");
-        if (strings) {
-            const usernames = JSON.parse(strings);
-            if (usernames[username]) {
-                window.alert("Username already exists");
-                return;
-            }
-            usernames[username] = { password: password };
-            localStorage.setItem("usernames", JSON.stringify(usernames));
+    const createButtonClicked = async () => {
+        const result = await fetch(`/api/auth`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+        });
+        if (!result.ok) {
+            window.alert("Failed to create account: " + (await result.json()).msg);
         } else {
-            const usernames = {};
-            usernames[username] = { password: password };
-            localStorage.setItem("usernames", JSON.stringify(usernames));
+            navigate("/createroom");
         }
-        localStorage.setItem("currentUser", username);
-        navigate("/createroom");
     };
 
     return (
