@@ -1,2 +1,3 @@
 development.pem
 node_modules
+service/dbConfig.json
