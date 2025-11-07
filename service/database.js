@@ -52,3 +52,19 @@ async function dropMemory(username, roomname, memory) {
     const update = { $push: { memories: memory } }; // will tell the memory to be pushed
     await roomsCollection.updateOne(query, update);
 }
+async function deleteMemory(username, roomname, id) {
+    const query = { owner: username, name: roomname };
+    const update = { $pull: { memories: { memoryId: id } } }; // will tell the memory to be pulled
+    await roomsCollection.updateOne(query, update);
+}
+module.exports = {
+    getUser,
+    addUser,
+    setCookie,
+    clearCookie,
+    addRoom,
+    getRoom,
+    getAllRooms,
+    dropMemory,
+    deleteMemory,
+};

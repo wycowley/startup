@@ -8,6 +8,8 @@ const pexels_api_key = "kLdEN698hYcnPgtwzKS4uOuEarRAtFlAUYDwy2773Sdm3RoaW8d9aVAU
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
+const DB = require("./database.js");
+
 const users = [];
 const rooms = [];
 
