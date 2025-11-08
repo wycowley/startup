@@ -10,9 +10,6 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 const DB = require("./database.js");
 
-const users = [];
-const rooms = [];
-
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
@@ -20,6 +17,9 @@ app.use(cookieParser());
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
+app.use((_req, res) => {
+    res.sendFile("index.html", { root: "public" });
+});
 // create account
 apiRouter.post("/auth", async (req, res) => {
     const { username, password } = req.body;
@@ -85,39 +85,6 @@ apiRouter.get("/user/me", async (req, res) => {
         res.status(401).send({ msg: "No user logged in" });
     }
 });
-// const createUser = async (username, password) => {
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const user = {
-//         username: username,
-//         password: hashedPassword,
-//     };
-//     users.push(user);
-//     return user;
-// };
-
-// // can work for either passwords or username
-// const getUser = (key, value) => {
-//     if (value) {
-//         return users.find((user) => user[key] === value);
-//     }
-//     return null;
-// };
-
-// const setCookie = (res, user) => {
-//     user.token = uuid.v4();
-
-// res.cookie("token", user.token, {
-//     secure: true,
-//     httpOnly: true,
-//     sameSite: "strict",
-// });
-// };
-
-// const clearCookie = (res, user) => {
-//     delete user.token; // gets rid of the field of token
-//     res.clearCookie("token");
-// };
-// create a room
 apiRouter.post("/room/create", async (req, res) => {
     const token = req.cookies["token"];
     const user = await DB.getUser("token", token);
@@ -206,19 +173,6 @@ apiRouter.get("/rooms/available", async (req, res) => {
     const userRooms = await DB.getAllRooms(user.username);
     res.send({ rooms: userRooms });
 });
-// const createRoom = (roomName, allowAnyone, ownerUsername) => {
-//     if (rooms.find((room) => room.name === roomName && room.owner === ownerUsername)) {
-//         return null; // room already exists
-//     }
-//     const room = {
-//         name: roomName,
-//         allowAnyone: allowAnyone,
-//         owner: ownerUsername,
-//         memories: [],
-//     };
-//     rooms.push(room);
-//     return room;
-// };
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

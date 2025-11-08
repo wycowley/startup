@@ -120,8 +120,8 @@ In the navigation bar, you need to type in the username and room name to go to a
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
--   [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
--   [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
+-   [x] **Stores data in MongoDB** - All data is stored in MongoDB now, no localStorage and no in-memory storage.
+-   [x] **Stores credentials in MongoDB** - User passwords are stored in MongoDB and tokens are stored when a user is logged in.
 
 ## 🚀 WebSocket deliverable
 
