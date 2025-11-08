@@ -23,87 +23,110 @@ app.use(`/api`, apiRouter);
 // create account
 apiRouter.post("/auth", async (req, res) => {
     const { username, password } = req.body;
-    if (getUser("username", username)) {
+    const userReturned = await DB.getUser("username", username);
+    console.log(userReturned);
+    if (userReturned != null) {
         // already has an account for that username
         // return an error then?
         res.status(409).send({ msg: "Existing user" });
     } else {
-        const user = await createUser(username, password);
-        setCookie(res, user); // create and set cookie
-
+        const user = await DB.addUser({ username: username, password: password });
+        res.cookie("token", user.token, {
+            secure: true,
+            httpOnly: true,
+            sameSite: "strict",
+        });
         res.send({ username: user.username });
     }
 });
 // login
 apiRouter.put("/auth", async (req, res) => {
     const { username, password } = req.body;
-    const user = getUser("username", username);
-    if (user && (await bcrypt.compare(password, user.password))) {
-        setCookie(res, user);
+    const user = await DB.getUser("username", username);
+    console.log(user);
+    console.log("Comparing passwords:", await bcrypt.compare(password, user.password));
+    if (user != null && (await bcrypt.compare(password, user.password))) {
+        console.log("User authenticated:", user);
+        const newToken = await DB.setCookie(user);
+        res.cookie("token", newToken, {
+            secure: true,
+            httpOnly: true,
+            sameSite: "strict",
+        });
         res.send({ username: user.username });
     } else {
+        console.log("Authentication failed for user:", username);
         res.status(401).send({ msg: "Unauthorized" });
     }
 });
 apiRouter.delete("/auth", async (req, res) => {
     const token = req.cookies["token"];
-    const user = await getUser("token", token);
+    console.log("Logging out token:", token);
+    const user = await DB.getUser("token", token);
+    console.log("Logging out user:", user);
     if (user) {
-        clearCookie(res, user);
+        await DB.clearCookie(user);
     }
+    console.log("Logging out user:", user);
+    res.clearCookie("token");
     res.send({});
 });
 apiRouter.get("/user/me", async (req, res) => {
     const token = req.cookies["token"];
-    const user = await getUser("token", token);
-    if (user) {
+    if (!token) {
+        res.status(401).send({ msg: "No user logged in" });
+        return;
+    }
+    const user = await DB.getUser("token", token);
+    console.log("Getting current user:", user);
+    if (user != null) {
         res.send({ username: user.username });
     } else {
         res.status(401).send({ msg: "No user logged in" });
     }
 });
-const createUser = async (username, password) => {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = {
-        username: username,
-        password: hashedPassword,
-    };
-    users.push(user);
-    return user;
-};
+// const createUser = async (username, password) => {
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const user = {
+//         username: username,
+//         password: hashedPassword,
+//     };
+//     users.push(user);
+//     return user;
+// };
 
-// can work for either passwords or username
-const getUser = (key, value) => {
-    if (value) {
-        return users.find((user) => user[key] === value);
-    }
-    return null;
-};
+// // can work for either passwords or username
+// const getUser = (key, value) => {
+//     if (value) {
+//         return users.find((user) => user[key] === value);
+//     }
+//     return null;
+// };
 
-const setCookie = (res, user) => {
-    user.token = uuid.v4();
+// const setCookie = (res, user) => {
+//     user.token = uuid.v4();
 
-    res.cookie("token", user.token, {
-        secure: true,
-        httpOnly: true,
-        sameSite: "strict",
-    });
-};
+// res.cookie("token", user.token, {
+//     secure: true,
+//     httpOnly: true,
+//     sameSite: "strict",
+// });
+// };
 
-const clearCookie = (res, user) => {
-    delete user.token; // gets rid of the field of token
-    res.clearCookie("token");
-};
+// const clearCookie = (res, user) => {
+//     delete user.token; // gets rid of the field of token
+//     res.clearCookie("token");
+// };
 // create a room
 apiRouter.post("/room/create", async (req, res) => {
     const token = req.cookies["token"];
-    const user = await getUser("token", token);
+    const user = await DB.getUser("token", token);
     if (!user) {
         res.status(401).send({ msg: "Unauthorized" });
         return;
     }
     const { roomName, allowAnyone } = req.body;
-    if (createRoom(roomName, allowAnyone, user.username)) {
+    if (await DB.addRoom({ name: roomName, allowAnyone: allowAnyone, owner: user.username, memories: [] })) {
         res.send({ msg: "Room created", username: user.username });
         return;
     }
@@ -113,16 +136,17 @@ apiRouter.post("/room/create", async (req, res) => {
 apiRouter.post("/room/drop/:username/:roomName", async (req, res) => {
     const { memory } = req.body;
     const { username, roomName } = req.params;
-    const room = rooms.find((r) => r.name === roomName && r.owner === username);
-    if (!room) {
+    const room = await DB.getRoom(username, roomName);
+    if (room == null) {
         res.status(404).send({ msg: "Room not found" });
         return;
     }
     // if the room does not allow for anyone to drop memories, check authorization
     if (!room.allowAnyone) {
+        console.log("Room does not allow anyone to drop memories, checking authorization");
         const token = req.cookies["token"];
-        const user = await getUser("token", token);
-        if (!user) {
+        const user = await DB.getUser("token", token);
+        if (user == null) {
             res.status(401).send({ msg: "Unauthorized" });
             return;
         }
@@ -131,63 +155,70 @@ apiRouter.post("/room/drop/:username/:roomName", async (req, res) => {
             return;
         }
     }
-    room.memories.push({ ...memory, memoryId: uuid.v4() }); // set a unique id for the memory so it can be deleted properly
+    await DB.dropMemory(username, roomName, memory);
     res.send({ msg: "Memory dropped" });
 });
 // get memories in a room
 apiRouter.get("/room/:username/:roomName", async (req, res) => {
     const { username, roomName } = req.params;
-    const room = rooms.find((r) => r.name === roomName && r.owner === username);
+    const room = await DB.getRoom(username, roomName);
     if (!room) {
         res.status(404).send({ msg: "Room not found" });
         return;
     }
     const token = req.cookies["token"];
-    const user = await getUser("token", token);
+    const user = await DB.getUser("token", token);
     res.send({ memories: room.memories, allowAnyone: room.allowAnyone, hostLoggedIn: user && user.username === username });
 });
 // delete a memory in a room
 apiRouter.delete("/room/delete/:username/:roomName/:memoryId", async (req, res) => {
     const { memoryId, roomName, username } = req.params;
     const token = req.cookies["token"];
-    const user = await getUser("token", token);
-    if (!user) {
+    const user = await DB.getUser("token", token);
+    if (user == null) {
         res.status(401).send({ msg: "Unauthorized" });
         return;
     }
-    const room = rooms.find((r) => r.name === roomName && r.owner === username);
-    if (!room) {
+    const room = await DB.getRoom(username, roomName);
+    if (room == null) {
         res.status(404).send({ msg: "Room not found" });
         return;
     }
+    console.log("User deleting memory:", user);
+    console.log("Room owner:", username);
+    if (room.owner !== user.username) {
+        res.status(403).send({ msg: "Forbidden" });
+        return;
+    }
+    console.log("Trying to delete memory:", memoryId);
     // don't need to check if you are the owner since only the owner can have a room with that name
-    room.memories = room.memories.filter((memory) => memory.memoryId !== memoryId);
+    await DB.deleteMemory(user.username, roomName, memoryId);
     res.send({ msg: "Memory deleted" });
 });
 // get rooms for a user
 apiRouter.get("/rooms/available", async (req, res) => {
     const token = req.cookies["token"];
-    const user = await getUser("token", token);
+    const user = await DB.getUser("token", token);
     if (!user) {
         res.status(401).send({ msg: "Unauthorized" });
         return;
     }
-    const userRooms = rooms.filter((r) => r.owner === user.username);
+    const userRooms = await DB.getAllRooms(user.username);
     res.send({ rooms: userRooms });
 });
-const createRoom = (roomName, allowAnyone, ownerUsername) => {
-    if (rooms.find((room) => room.name === roomName && room.owner === ownerUsername)) {
-        return null; // room already exists
-    }
-    const room = {
-        name: roomName,
-        allowAnyone: allowAnyone,
-        owner: ownerUsername,
-        memories: [],
-    };
-    rooms.push(room);
-    return room;
-};
+// const createRoom = (roomName, allowAnyone, ownerUsername) => {
+//     if (rooms.find((room) => room.name === roomName && room.owner === ownerUsername)) {
+//         return null; // room already exists
+//     }
+//     const room = {
+//         name: roomName,
+//         allowAnyone: allowAnyone,
+//         owner: ownerUsername,
+//         memories: [],
+//     };
+//     rooms.push(room);
+//     return room;
+// };
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
