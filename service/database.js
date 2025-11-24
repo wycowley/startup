@@ -74,6 +74,8 @@ async function getAllRooms(username) {
 async function dropMemory(username, roomname, memory) {
     const query = { owner: username, name: roomname };
     memory.memoryId = uuid.v4();
+    memory.likes = 0;
+    memory.likeList = [];
     const update = { $push: { memories: memory } }; // will tell the memory to be pushed
     await roomsCollection.updateOne(query, update);
 }
@@ -81,6 +83,16 @@ async function deleteMemory(username, roomname, id) {
     const query = { owner: username, name: roomname };
     const update = { $pull: { memories: { memoryId: id } } }; // will tell the memory to be pulled
     await roomsCollection.updateOne(query, update);
+}
+async function changeLikes(username, roomname, id, liked) {
+    const query = { owner: username, name: roomname, "memories.memoryId": id };
+    if (liked) {
+        const update = { $inc: { "memories.$.likes": 1 }, $push: { "memories.$.likeList": username } };
+        await roomsCollection.updateOne(query, update);
+    } else {
+        const update = { $inc: { "memories.$.likes": -1 }, $pull: { "memories.$.likeList": username } };
+        await roomsCollection.updateOne(query, update);
+    }
 }
 module.exports = {
     getUser,

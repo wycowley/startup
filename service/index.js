@@ -135,7 +135,36 @@ apiRouter.get("/room/:username/:roomName", async (req, res) => {
     }
     const token = req.cookies["token"];
     const user = await DB.getUser("token", token);
+
+    if (user) {
+        room.memories.forEach((memory) => {
+            if (memory.likeList && memory.likeList.includes(user.username)) {
+                memory.liked = true;
+            } else {
+                memory.liked = false;
+            }
+            memory.likeList = undefined;
+        });
+    }
+
     res.send({ memories: room.memories, allowAnyone: room.allowAnyone, hostLoggedIn: user && user.username === username });
+});
+apiRouter.post("/room/like/:username/:roomName/:memoryId", async (req, res) => {
+    const { username, roomName, memoryId } = req.params;
+    const { liked } = req.body;
+    const token = req.cookies["token"];
+    const user = await DB.getUser("token", token);
+    if (user == null) {
+        res.status(401).send({ msg: "Unauthorized" });
+        return;
+    }
+    const room = await DB.getRoom(username, roomName);
+    if (room == null) {
+        res.status(404).send({ msg: "Room not found" });
+        return;
+    }
+    await DB.changeLikes(user.username, roomName, memoryId, liked);
+    res.send({ msg: "Like status changed" });
 });
 // delete a memory in a room
 apiRouter.delete("/room/delete/:username/:roomName/:memoryId", async (req, res) => {

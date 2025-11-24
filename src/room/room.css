@@ -73,3 +73,20 @@
 .description > p {
     margin: 0;
 }
+.lower-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem 0.5rem 0.25rem;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px gray solid;
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+}

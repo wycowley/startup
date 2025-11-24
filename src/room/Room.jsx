@@ -32,6 +32,25 @@ export default function Room() {
         fetchRoomData();
     }, [roomName]);
 
+    const handleLike = (memoryId) => {
+        console.log("Like button clicked");
+        const cardData = data.memories.find((m) => m.memoryId === memoryId);
+        if (!cardData) {
+            console.error("Memory not found");
+            return;
+        }
+        if (cardData.liked) {
+            cardData.likes = (cardData.likes ?? 1) - 1;
+            cardData.liked = false;
+            setData({ ...data });
+            return;
+        }
+        const newLikes = (cardData.likes ?? 0) + 1;
+        cardData.likes = newLikes;
+        cardData.liked = true;
+        setData({ ...data });
+    };
+
     const memoryList = data.memories.map((cardData) => {
         return (
             <div className='card' key={cardData.memoryId}>
@@ -39,10 +58,21 @@ export default function Room() {
                     {cardData.timestamp} {hostLoggedIn && <button onClick={() => deleteMemory(cardData)}>×</button>}
                 </p>
                 <img src={cardData.imageUrl} />
-
-                <div className='description'>
-                    <p>{cardData.description}</p>
-                    <p>Posted by: {cardData.name}</p>
+                <div className='lower-content'>
+                    <div className='description'>
+                        <p>{cardData.description}</p>
+                        <p>Posted by: {cardData.name}</p>
+                    </div>
+                    <button
+                        className='likes'
+                        onClick={() => {
+                            handleLike(cardData.memoryId);
+                        }}>
+                        {cardData.likes ?? 0}
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill={cardData.liked ? "black" : "none"} stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                            <path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' />
+                        </svg>
+                    </button>
                 </div>
             </div>
         );
