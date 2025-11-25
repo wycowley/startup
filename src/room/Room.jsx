@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./room.css";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
+import { WebSocketHandler, Event, EventMessage } from "../WebSocketHandler";
 
 export default function Room() {
     const { username, roomName } = useParams();
@@ -29,8 +30,27 @@ export default function Room() {
                 dropMemoryButton.current.disabled = true;
             }
         };
+        WebSocketHandler.addHandler(handleWebSocketMessage);
         fetchRoomData();
     }, [roomName]);
+    const handleWebSocketMessage = (message) => {
+        if (message.event === Event.Add) {
+            const eventData = message.data;
+            const newMemories = [eventData, ...data.memories];
+            setData({ ...data, memories: newMemories });
+        } else if (message.event === Event.Delete) {
+            const eventData = message.data;
+            const newMemories = data.memories.filter((m) => m.memoryId !== eventData.memoryId);
+            setData({ ...data, memories: newMemories });
+        } else if (message.event === Event.Like) {
+            const eventData = message.data;
+            const memory = data.memories.find((m) => m.memoryId === eventData.memoryId);
+            if (memory) {
+                memory.likes = eventData.likes;
+                setData({ ...data });
+            }
+        }
+    };
 
     const handleLike = async (memoryId) => {
         console.log("Like button clicked");
@@ -68,6 +88,9 @@ export default function Room() {
             setData({ ...data });
         } else {
             console.log("Successfully changed like status");
+            if (cardData.liked) {
+                WebSocketHandler.broadcastEvent("DropAMemory", Event.Like, { memoryId: memoryId, likes: cardData.likes });
+            }
         }
     };
 
@@ -104,6 +127,8 @@ export default function Room() {
         if (!result.ok) {
             console.error("Failed to delete memory");
             window.alert("Failed to delete memory");
+        } else {
+            WebSocketHandler.broadcastEvent("DropAMemory", Event.Delete, { memoryId: memory.memoryId });
         }
         // refresh the memory list
         const newData = data.memories.filter((m) => m.memoryId !== memory.memoryId);

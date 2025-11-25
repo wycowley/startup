@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useParams, useNavigate } from "react-router-dom";
 import "./dropmemory.css";
+import { WebSocketHandler, Event } from "../WebSocketHandler";
 
 export default function DropMemory() {
     const { username, roomName } = useParams();
@@ -45,6 +46,8 @@ export default function DropMemory() {
         if (!result.ok) {
             console.error("Failed to drop memory");
             window.alert("Failed to drop memory, only the owner can drop memories in this room");
+        } else {
+            WebSocketHandler.broadcastEvent("DropAMemory", Event.Add, await result.json());
         }
         navigate(`/room/${username}/${roomName}`);
     };
