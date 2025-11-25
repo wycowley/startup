@@ -32,7 +32,7 @@ export default function Room() {
         fetchRoomData();
     }, [roomName]);
 
-    const handleLike = (memoryId) => {
+    const handleLike = async (memoryId) => {
         console.log("Like button clicked");
         const cardData = data.memories.find((m) => m.memoryId === memoryId);
         if (!cardData) {
@@ -43,12 +43,32 @@ export default function Room() {
             cardData.likes = (cardData.likes ?? 1) - 1;
             cardData.liked = false;
             setData({ ...data });
-            return;
+        } else {
+            const newLikes = (cardData.likes ?? 0) + 1;
+            cardData.likes = newLikes;
+            cardData.liked = true;
+            setData({ ...data });
         }
-        const newLikes = (cardData.likes ?? 0) + 1;
-        cardData.likes = newLikes;
-        cardData.liked = true;
-        setData({ ...data });
+        const result = await fetch(`/api/room/like/${username}/${roomName}/${memoryId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ liked: cardData.liked }),
+        });
+        if (!result.ok) {
+            console.error("Failed to change like status");
+            window.alert("Must be logged in to like memories");
+            cardData.liked = !cardData.liked;
+            if (cardData.liked) {
+                cardData.likes = (cardData.likes ?? 0) + 1;
+            } else {
+                cardData.likes = (cardData.likes ?? 1) - 1;
+            }
+            setData({ ...data });
+        } else {
+            console.log("Successfully changed like status");
+        }
     };
 
     const memoryList = data.memories.map((cardData) => {
@@ -69,7 +89,7 @@ export default function Room() {
                             handleLike(cardData.memoryId);
                         }}>
                         {cardData.likes ?? 0}
-                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill={cardData.liked ? "black" : "none"} stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20' fill={cardData.liked ? "black" : "none"} stroke='currentColor' stroke-width='2'>
                             <path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z' />
                         </svg>
                     </button>

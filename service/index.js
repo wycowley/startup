@@ -20,6 +20,9 @@ app.use(`/api`, apiRouter);
 app.use((_req, res) => {
     res.sendFile("index.html", { root: "public" });
 });
+
+// const verifyToken()
+
 // create account
 apiRouter.post("/auth", async (req, res) => {
     const { username, password } = req.body;
@@ -153,17 +156,20 @@ apiRouter.post("/room/like/:username/:roomName/:memoryId", async (req, res) => {
     const { username, roomName, memoryId } = req.params;
     const { liked } = req.body;
     const token = req.cookies["token"];
+    console.log("Token from cookie:", token);
     const user = await DB.getUser("token", token);
-    if (user == null) {
+    if (!user) {
         res.status(401).send({ msg: "Unauthorized" });
         return;
+    } else {
+        console.log("User changing like status:", user);
     }
     const room = await DB.getRoom(username, roomName);
     if (room == null) {
         res.status(404).send({ msg: "Room not found" });
         return;
     }
-    await DB.changeLikes(user.username, roomName, memoryId, liked);
+    await DB.changeLikes(username, roomName, memoryId, liked, user.username);
     res.send({ msg: "Like status changed" });
 });
 // delete a memory in a room
