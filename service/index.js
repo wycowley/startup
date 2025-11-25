@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const express = require("express");
 const uuid = require("uuid");
 const app = express();
+const { forwardWebSocket } = require("./WebSocketForwarding");
 
 const pexels_api_key = "kLdEN698hYcnPgtwzKS4uOuEarRAtFlAUYDwy2773Sdm3RoaW8d9aVAU";
 
@@ -209,6 +210,8 @@ apiRouter.get("/rooms/available", async (req, res) => {
     res.send({ rooms: userRooms });
 });
 
-app.listen(port, () => {
+const httpService = app.listen(port, () => {
     console.log(`Listening on port ${port}`);
 });
+
+forwardWebSocket(httpService);

@@ -22,7 +22,9 @@ export default function Room() {
                 return;
             }
             const roomData = await result.json();
+            console.log(roomData);
             setData(roomData);
+
             setHostLoggedIn(roomData.hostLoggedIn);
             if (roomData.allowAnyone || roomData.hostLoggedIn) {
                 dropMemoryButton.current.disabled = false;
@@ -32,24 +34,35 @@ export default function Room() {
         };
         WebSocketHandler.addHandler(handleWebSocketMessage);
         fetchRoomData();
+
+        return () => {
+            WebSocketHandler.removeHandler(handleWebSocketMessage);
+        };
     }, [roomName]);
     const handleWebSocketMessage = (message) => {
-        if (message.event === Event.Add) {
-            const eventData = message.data;
-            const newMemories = [eventData, ...data.memories];
-            setData({ ...data, memories: newMemories });
-        } else if (message.event === Event.Delete) {
-            const eventData = message.data;
-            const newMemories = data.memories.filter((m) => m.memoryId !== eventData.memoryId);
-            setData({ ...data, memories: newMemories });
-        } else if (message.event === Event.Like) {
-            const eventData = message.data;
-            const memory = data.memories.find((m) => m.memoryId === eventData.memoryId);
-            if (memory) {
-                memory.likes = eventData.likes;
-                setData({ ...data });
+        console.log(message.type);
+        console.log(Event.Like);
+
+        // needs to be this because otherwise data will still be empty
+        setData((prevData) => {
+            const eventData = message.value;
+            if (message.type == Event.Add) {
+                const newMemories = [eventData, ...prevData.memories];
+                return { ...prevData, memories: newMemories };
+            } else if (message.type == Event.Delete) {
+                const newMemories = prevData.memories.filter((m) => m.memoryId !== eventData.memoryId);
+                return { ...prevData, memories: newMemories };
+            } else if (message.type == Event.Like) {
+                const newMemories = prevData.memories.map((m) => {
+                    if (m.memoryId === eventData.memoryId) {
+                        return { ...m, likes: eventData.likes };
+                    }
+                    return m;
+                });
+                return { ...prevData, memories: newMemories };
             }
-        }
+            return prevData;
+        });
     };
 
     const handleLike = async (memoryId) => {
@@ -88,9 +101,7 @@ export default function Room() {
             setData({ ...data });
         } else {
             console.log("Successfully changed like status");
-            if (cardData.liked) {
-                WebSocketHandler.broadcastEvent("DropAMemory", Event.Like, { memoryId: memoryId, likes: cardData.likes });
-            }
+            WebSocketHandler.broadcastEvent("DropAMemory", Event.Like, { memoryId: memoryId, likes: cardData.likes });
         }
     };
 

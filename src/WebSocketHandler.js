@@ -19,8 +19,13 @@ class WebSocketHandler {
     handlers = [];
 
     constructor() {
-        const port = window.location.port;
+        let port = window.location.port;
         const protocol = window.location.protocol === "http:" ? "ws" : "wss";
+
+        if (port === "5173" || port === "3000") {
+            port = "4000";
+        }
+
         this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws`);
         this.socket.onopen = (event) => {
             this.receiveEvent(new EventMessage("DropAMemory", Event.System, { msg: "connected" }));
@@ -36,6 +41,7 @@ class WebSocketHandler {
         };
     }
     broadcastEvent(from, type, value) {
+        console.log("Broadcasting WebSocket event:", from, type, value);
         const event = new EventMessage(from, type, value);
         this.socket.send(JSON.stringify(event));
     }
@@ -50,6 +56,7 @@ class WebSocketHandler {
 
     receiveEvent(event) {
         this.handlers.forEach((handler) => {
+            console.log("WebSocket event received:", event);
             handler(event);
         });
     }
