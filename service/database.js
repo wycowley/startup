@@ -81,6 +81,8 @@ async function dropMemory(username, roomname, memory) {
     memory.likeList = [];
     const update = { $push: { memories: memory } }; // will tell the memory to be pushed
     await roomsCollection.updateOne(query, update);
+
+    return memory;
 }
 async function deleteMemory(username, roomname, id) {
     const query = { owner: username, name: roomname };

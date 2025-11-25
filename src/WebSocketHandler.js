@@ -54,4 +54,5 @@ class WebSocketHandler {
         });
     }
 }
-export { WebSocketHandler, Event, EventMessage };
+const WebSocketHandlerInstance = new WebSocketHandler();
+export { WebSocketHandlerInstance as WebSocketHandler, Event, EventMessage };

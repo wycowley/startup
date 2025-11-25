@@ -117,16 +117,16 @@ apiRouter.post("/room/drop/:username/:roomName", async (req, res) => {
         const token = req.cookies["token"];
         const user = await DB.getUser("token", token);
         if (user == null) {
-            res.status(401).send({ msg: "Unauthorized" });
+            res.status(401).send({ msg: "Unauthorized", memory: null });
             return;
         }
         if (room.owner !== user.username) {
-            res.status(403).send({ msg: "Forbidden" });
+            res.status(403).send({ msg: "Forbidden", memory: null });
             return;
         }
     }
-    await DB.dropMemory(username, roomName, memory);
-    res.send({ msg: "Memory dropped" });
+    const newMemory = await DB.dropMemory(username, roomName, memory);
+    res.send({ msg: "Memory dropped", memory: newMemory });
 });
 // get memories in a room
 apiRouter.get("/room/:username/:roomName", async (req, res) => {

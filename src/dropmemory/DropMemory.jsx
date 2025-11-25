@@ -47,7 +47,9 @@ export default function DropMemory() {
             console.error("Failed to drop memory");
             window.alert("Failed to drop memory, only the owner can drop memories in this room");
         } else {
-            WebSocketHandler.broadcastEvent("DropAMemory", Event.Add, await result.json());
+            const json = await result.json();
+            console.log(json);
+            WebSocketHandler.broadcastEvent("DropAMemory", Event.Add, json.memory);
         }
         navigate(`/room/${username}/${roomName}`);
     };
