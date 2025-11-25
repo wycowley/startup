@@ -127,8 +127,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
--   [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
--   [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
--   [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
--   [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
--   [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+-   [x] **Backend listens for WebSocket connection** - The backend makes WebSocket connections and broadcasts events to all connected clients.
+-   [x] **Frontend makes WebSocket connection** - The frontend makes WebSocket connections in Room.jsx and DropMemory.jsx
+-   [x] **Data sent over WebSocket connection** - I sent data such as the memoryId that was deleted or liked, the new number of likes, or the new memory that was added.
+-   [x] **WebSocket data displayed** - When an admin deletes a memory, when a memory is added, or when someone likes a memory, all users viewing that room see the update in real time
+-   [x] **Application is fully functional** - Everything works now! I just want to polish a few UI things and then it should be 100% good to go.

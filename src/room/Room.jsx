@@ -23,6 +23,10 @@ export default function Room() {
             }
             const roomData = await result.json();
             console.log(roomData);
+            // sort by timestamp descending
+            roomData.memories.sort((a, b) => {
+                return new Date(b.timestamp) - new Date(a.timestamp);
+            });
             setData(roomData);
 
             setHostLoggedIn(roomData.hostLoggedIn);
